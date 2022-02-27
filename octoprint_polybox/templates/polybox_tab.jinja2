@@ -1,5 +1,5 @@
 <div>
-    <h1>Filament Storage Container</h1>
+    <h1>PolyBox</h1>
     {{ _('Humidity') }}: <input class="storage-box-display" disabled="disabled" data-bind="value: humidity"/>
     {{ _('Temperature') }}: <input class="storage-box-display" disabled="disabled"  data-bind="value: temp"/>
     <table border="1">
@@ -34,6 +34,8 @@
         <tr>
             <td>{{ _('Gcode') }}: <input class="storage-box-display" disabled="disabled" data-bind="value: gcodeExtrusion"/></td>
             <td>{{ _('Box') }}: <input class="storage-box-display" disabled="disabled" data-bind="value: boxExtrusion"/></td>
+        </tr>
+        <tr>
             <td>{{ _('Mismatch') }}: <input class="storage-box-display" disabled="disabled" data-bind="value: extrusionMismatch"/></td>
             <td><button class="btn btn-warning" data-bind="click: resetExtMon">{{ _('Reset') }}</button></td>
         </tr>

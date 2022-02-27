@@ -2,31 +2,31 @@
     <div class="control-group">
         <label class="control-label">{{ _('Default Max Temp') }}</label>
         <div class="controls">
-            <input class="storage-box-input" type="number" data-bind="value: settings.plugins.filamentstorage.maxT">
+            <input class="storage-box-input" type="number" data-bind="value: settings.plugins.polybox.maxT">
         </div>
         <label class="control-label">{{ _('Default Max Humidity') }}</label>
         <div class="controls">
-            <input class="storage-box-input" type="number" min="0" max="100" data-bind="value: settings.plugins.filamentstorage.maxH">
+            <input class="storage-box-input" type="number" min="0" max="100" data-bind="value: settings.plugins.polybox.maxH">
         </div>
         <label class="control-label">{{ _('Pause on High Humidity') }}</label>
         <div class="controls">
-            <input class="storage-box-input" type="checkbox" data-bind="checked: settings.plugins.filamentstorage.humidityPause">
+            <input class="storage-box-input" type="checkbox" data-bind="checked: settings.plugins.polybox.humidityPause">
         </div><br/>
         <label class="control-label">{{ _('Humidity Warn Percentage') }}</label>
         <div class="controls">
-            <input class="storage-box-input" type="number" min="1" max="100" data-bind="value: settings.plugins.filamentstorage.humidityWarnPercentage">
+            <input class="storage-box-input" type="number" min="1" max="100" data-bind="value: settings.plugins.polybox.humidityWarnPercentage">
         </div><br/><br/>
         <label class="control-label">{{ _('Humidity Pause Percentage') }}</label>
         <div class="controls">
-            <input class="storage-box-input" type="number" min="1" max="100" data-bind="value: settings.plugins.filamentstorage.humidityPausePercentage">
+            <input class="storage-box-input" type="number" min="1" max="100" data-bind="value: settings.plugins.polybox.humidityPausePercentage">
         </div><br/><br/>
         <label class="control-label">{{ _('Pause on Extrusion Mixmatch') }}</label>
         <div class="controls">
-            <input class="storage-box-input" type="checkbox" data-bind="checked: settings.plugins.filamentstorage.extrusionMismatchPause">
+            <input class="storage-box-input" type="checkbox" data-bind="checked: settings.plugins.polybox.extrusionMismatchPause">
         </div><br/><br/>
         <label class="control-label">{{ _('Maximum Extrusion Mixmatch (mm)') }}</label>
         <div class="controls">
-            <input class="storage-box-input" type="number" min="1" max="1000" data-bind="value: settings.plugins.filamentstorage.extrusionMismatchMax">
+            <input class="storage-box-input" type="number" min="1" max="1000" data-bind="value: settings.plugins.polybox.extrusionMismatchMax">
         </div>
     </div>
 </form>

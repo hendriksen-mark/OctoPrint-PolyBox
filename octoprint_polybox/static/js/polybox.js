@@ -1,11 +1,11 @@
 /*
- * View model for OctoPrint-Filamentstorage
+ * View model for OctoPrint-Polybox
  *
- * Author: Walt Moorhouse
+ * Author: Mark Hendriksen
  * License: AGPLv3
  */
 $(function() {
-    function FilamentstorageViewModel(parameters) {
+    function PolyBoxViewModel(parameters) {
         var self = this;
 
         // assign the injected parameters
@@ -84,11 +84,11 @@ $(function() {
             self.errorMsg("");
             self.boxExtrusion("0.00");
             self.gcodeExtrusion("0.00");
-            self.warnTemp(self.settings.settings.plugins.filamentstorage.humidityWarnPercentage());
+            self.warnTemp(self.settings.settings.plugins.polybox.humidityWarnPercentage());
         };
 
         self.onDataUpdaterPluginMessage = (pluginIdent, message) => {
-            if (pluginIdent === "filamentstorage") {
+            if (pluginIdent === "polybox") {
                 if (message.type === "error") {
                     // we can get connection errors via this channel, so don't set disconnected to false for these.
                     self.errorMsg(message.data);
@@ -156,7 +156,7 @@ $(function() {
 
         self.ajaxRequest = payload => {
             return $.ajax({
-                url: API_BASEURL + "plugin/filamentstorage",
+                url: API_BASEURL + "plugin/polybox",
                 type: "POST",
                 dataType: "json",
                 data: JSON.stringify(payload),
@@ -171,10 +171,10 @@ $(function() {
      * and a full list of the available options.
      */
     OCTOPRINT_VIEWMODELS.push({
-        construct: FilamentstorageViewModel,
+        construct: PolyBoxViewModel,
         // ViewModels your plugin depends on, e.g. loginStateViewModel, settingsViewModel, ...
         dependencies: [ "settingsViewModel" ],
-        // Elements to bind to, e.g. #settings_plugin_filamentstorage, #tab_plugin_filamentstorage, ...
-        elements: [ "#tab_plugin_filamentstorage", "#navbar_plugin_filamentstorage" ]
+        // Elements to bind to, e.g. #settings_plugin_polybox, #tab_plugin_polybox, ...
+        elements: [ "#tab_plugin_polybox", "#navbar_plugin_polybox" ]
     });
 });

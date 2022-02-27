@@ -10,7 +10,7 @@ EXTRUSION_EXPRESSION = ".*G[0|1] .*E[+]*([\\-0-9]+[.]*[0-9]*).*"
 extrusionPattern = re.compile(EXTRUSION_EXPRESSION)
 
 
-class FilamentstoragePlugin(octoprint.plugin.StartupPlugin,
+class PolyBoxPlugin(octoprint.plugin.StartupPlugin,
 							octoprint.plugin.SettingsPlugin,
 							octoprint.plugin.AssetPlugin,
 							octoprint.plugin.SimpleApiPlugin,
@@ -19,12 +19,12 @@ class FilamentstoragePlugin(octoprint.plugin.StartupPlugin,
 	# ~~ StartupPlugin mixin
 
 	def on_after_startup(self):
-		self._logger.info("Attempting to connect to Filament Storage Container...")
+		self._logger.info("Attempting to connect to PolyBox...")
 		self.conn = Connection.Connection(self)
 		if self.conn.is_connected():
-			self._logger.info("Connected to Filament Storage Container!")
+			self._logger.info("Connected to PolyBox!")
 		else:
-			self._logger.error("Could not connect to Filament Storage Container!")
+			self._logger.error("Could not connect to PolyBox!")
 
 	# ~~ SettingsPlugin mixin
 
@@ -45,8 +45,8 @@ class FilamentstoragePlugin(octoprint.plugin.StartupPlugin,
 		# Define your plugin's asset files to automatically include in the
 		# core UI here.
 		return dict(
-			js=["js/filamentstorage.js"],
-			css=["css/filamentstorage.css"],
+			js=["js/polybox.js"],
+			css=["css/polybox.css"],
 		)
 
 	# ~~ SimpleApiPlugin mixin
@@ -100,18 +100,18 @@ class FilamentstoragePlugin(octoprint.plugin.StartupPlugin,
 		# Plugin here. See https://github.com/foosel/OctoPrint/wiki/Plugin:-Software-Update
 		# for details.
 		return dict(
-			filamentstorage=dict(
-				displayName="Filament Storage",
+			polybox=dict(
+				displayName="PolyBox",
 				displayVersion=self._plugin_version,
 
 				# version check: github repository
 				type="github_release",
-				user="waltmoorhouse",
-				repo="OctoPrint-Filamentstorage",
+				user="markhendriksen",
+				repo="OctoPrint-PolyBox",
 				current=self._plugin_version,
 
 				# update method: pip
-				pip="https://github.com/waltmoorhouse/OctoPrint-Filamentstorage/archive/{target_version}.zip"
+				pip="https://github.com/hendriksen-mark/OctoPrint-PolyBox/archive/{target_version}.zip"
 			)
 		)
 
@@ -124,13 +124,13 @@ class FilamentstoragePlugin(octoprint.plugin.StartupPlugin,
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py
 # ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
 # can be overwritten via __plugin_xyz__ control properties. See the documentation for that.
-__plugin_name__ = "Filament Storage"
+__plugin_name__ = "PolyBox"
 __plugin_pythoncompat__ = ">2.7,<4"
 
 
 def __plugin_load__():
 	global __plugin_implementation__
-	__plugin_implementation__ = FilamentstoragePlugin()
+	__plugin_implementation__ = PolyBoxPlugin()
 
 	global __plugin_hooks__
 	__plugin_hooks__ = {

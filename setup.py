@@ -4,24 +4,24 @@
 ### Do not forget to adjust the following variables to your own plugin.
 
 # The plugin's identifier, has to be unique
-plugin_identifier = "filamentstorage"
+plugin_identifier = "polybox"
 
 # The plugin's python package, should be "octoprint_<plugin identifier>", has to be unique
-plugin_package = "octoprint_filamentstorage"
+plugin_package = "octoprint_polybox"
 
 # The plugin's human readable name. Can be overwritten within OctoPrint's internal data via __plugin_name__ in the
 # plugin module
-plugin_name = "OctoPrint-Filamentstorage"
+plugin_name = "OctoPrint-PolyBox"
 
 # The plugin's version. Can be overwritten within OctoPrint's internal data via __plugin_version__ in the plugin module
-plugin_version = "0.3.1"
+plugin_version = "0.1.0"
 
 # The plugin's description. Can be overwritten within OctoPrint's internal data via __plugin_description__ in the plugin
 # module
-plugin_description = """Plugin for OpenSource Filament Storage Containers that report Temp, Humidity, and scale values over USB."""
+plugin_description = """Plugin for OpenSource PolyBox that report Temp, Humidity, and scale values over USB."""
 
 # The plugin's author. Can be overwritten within OctoPrint's internal data via __plugin_author__ in the plugin module
-plugin_author = "Walt Moorhouse"
+plugin_author = "Mark Hendriksen"
 
 # The plugin's author's mail address.
 plugin_author_email = ""

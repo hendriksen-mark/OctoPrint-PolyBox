@@ -6,8 +6,6 @@ import threading
 import serial
 import serial.tools.list_ports
 
-__plugin_pythoncompat__ = ">=2.7,<4"
-
 HUMIDITY_EXPRESSION = "^H:+([\\-0-9]+[.]*[0-9]*)%.*"
 L1_EXPRESSION = ".*L1:+([\\-0-9]+[.]*[0-9]*)mm.*"
 L2_EXPRESSION = ".*L2:+([\\-0-9]+[.]*[0-9]*)mm.*"
