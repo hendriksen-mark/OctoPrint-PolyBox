@@ -43,6 +43,7 @@ class Connection():
 			self._logger.info("len ports: %s" % len(self.ports))
 			for port in self.ports:
 				self._logger.info("is connected?: %s" % self._connected)
+				self._logger.info("printer port: %s" % self.isPrinterPort(port))
 				if not self._connected:
 					if self.isPrinterPort(port):
 						self._logger.info("Skipping Printer Port:" + port)
