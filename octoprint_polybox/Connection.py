@@ -220,6 +220,7 @@ class Connection():
 
 	def startReadThread(self):
 		if self.readThread is None:
+			self.logger.info("startReadThread")
 			self.readThreadStop = False
 			self.readThread = threading.Thread(
 				target=self.arduino_read_thread,
