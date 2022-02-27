@@ -169,8 +169,8 @@ class Connection():
 
 		baselist = baselist \
 		 	#+ glob.glob('/dev/serial/by-id/*FTDI*') \
-			#+ glob.glob('/dev/*usbserial*') \
-			#+ glob.glob('/dev/*usbmodem*') \
+			+ glob.glob('/dev/*usbserial*') \
+			+ glob.glob('/dev/*usbmodem*') \
 			+ glob.glob('/dev/*ttyUSB*')
 
 		baselist = self.getRealPaths(baselist)
