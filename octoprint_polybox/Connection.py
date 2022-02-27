@@ -46,25 +46,33 @@ class Connection():
 			if printer_port == '/dev/ttyUSB0':
 				self._logger.info("len ports: %s" % len(self.ports))
 				self._logger.info("Skipping Printer Port: /dev/ttyUSB0")
-				self._logger.info("Starting read thread on /dev/ttyUSB1...")
-				self.serialConn = serial.Serial('/dev/ttyUSB1', 115200, timeout=0.5)
-				self.startReadThread()
-				self._connected = True
-				self.update_ui_error("Connection succes!")
+				try:
+					self._logger.info("Starting read thread on /dev/ttyUSB1...")
+					self.serialConn = serial.Serial('/dev/ttyUSB1', 115200, timeout=0.5)
+					self.startReadThread()
+					self._connected = True
+					self.update_ui_error("Connection succes on /dev/ttyUSB1!")
+				except:
+					self._logger.info("Couldn't connect on any port.")
+					self.update_ui_error("Couldn't connect on any port.")
+
 
 			if printer_port == '/dev/ttyUSB1':
 				self._logger.info("len ports: %s" % len(self.ports))
 				self._logger.info("Skipping Printer Port: /dev/ttyUSB1")
-				self._logger.info("Starting read thread on /dev/ttyUSB0...")
-				self.serialConn = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.5)
-				self.startReadThread()
-				self._connected = True
-				self.update_ui_error("Connection succes!")
+				try:
+					self._logger.info("Starting read thread on /dev/ttyUSB0...")
+					self.serialConn = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.5)
+					self.startReadThread()
+					self._connected = True
+					self.update_ui_error("Connection succes on /dev/ttyUSB0!")
+				except:
+					self._logger.info("Couldn't connect on any port.")
+					self.update_ui_error("Couldn't connect on any port.")
 
 		else:
 			self._logger.info("NO SERIAL PORTS FOUND!")
-			msg = "NO SERIAL PORTS FOUND!"
-			self.update_ui_error(msg)
+			self.update_ui_error("NO SERIAL PORTS FOUND!")
 
 	def update_ui_control(self, data):
 		self._plugin_manager.send_plugin_message(self._identifier, {"type": "control", "data": data})
