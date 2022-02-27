@@ -56,7 +56,7 @@ class Connection():
 							self.serialConn = serial.Serial(port, 115200, timeout=0.5)
 							self.startReadThread()
 							self._connected = True
-							self.update_ui_error("Connection succes!" % port)
+							self.update_ui_error("Connection succes!")
 						except serial.SerialException:
 							self.update_ui_error("Connection failed!")
 			if not self._connected:
