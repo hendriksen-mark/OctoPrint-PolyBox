@@ -50,8 +50,11 @@ class Connection():
 					try:
 						self._logger.info("Starting read thread on /dev/ttyUSB1...")
 						self.serialConn = serial.Serial('/dev/ttyUSB1', 115200, timeout=0.5)
+						self._logger.info("step 1...")
 						self.startReadThread()
+						self._logger.info("step 2...")
 						self._connected = True
+						self._logger.info("step 3...")
 						self.update_ui_error("Connection succes on /dev/ttyUSB1!")
 					except:
 						self._logger.info("Couldn't connect on any port.")
