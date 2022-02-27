@@ -51,7 +51,7 @@ class Connection():
 						self._logger.info("Starting read thread on /dev/ttyUSB1...")
 						self.serialConn = serial.Serial('/dev/ttyUSB1', 115200, timeout=0.5)
 						self._logger.info("step 1...")
-						self.startReadThread()
+						self.startReadThread(self)
 						self._logger.info("step 2...")
 						self._connected = True
 						self._logger.info("step 3...")
@@ -68,7 +68,7 @@ class Connection():
 						self._logger.info("Starting read thread on /dev/ttyUSB0...")
 						self.serialConn = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.5)
 						self._logger.info("step 1...")
-						self.startReadThread()
+						self.startReadThread(self)
 						self._logger.info("step 2...")
 						self._connected = True
 						self._logger.info("step 3...")
@@ -228,6 +228,7 @@ class Connection():
 				return False
 
 	def startReadThread(self):
+		self._logger.info("step 4...")
 		if self.readThread is None:
 			self.logger.info("startReadThread")
 			self.readThreadStop = False
