@@ -40,21 +40,25 @@ class Connection():
 		self.ports = self.getAllPorts()
 		self._logger.info("Potential ports: %s" % self.ports)
 		if len(self.ports) > 0:
+			self._logger.info("len ports: %s" % len(self.ports))
 			for port in self.ports:
+				self._logger.info("is connected?: %s" % self._connected)
 				if not self._connected:
 					if self.isPrinterPort(port):
 						self._logger.info("Skipping Printer Port:" + port)
 					else:
 						try:
-							self.serialConn = serial.Serial(port, 115200, timeout=0.5)
 							self._logger.info("Starting read thread...")
+							self.serialConn = serial.Serial(port, 115200, timeout=0.5)
 							self.startReadThread()
 							self._connected = True
 						except serial.SerialException:
 							self.update_ui_error("Connection failed!")
 			if not self._connected:
+				self._logger.info("Couldn't connect on any port.")
 				self.update_ui_error("Couldn't connect on any port.")
 		else:
+			self._logger.info("NO SERIAL PORTS FOUND!")
 			msg = "NO SERIAL PORTS FOUND!"
 			self.update_ui_error(msg)
 
