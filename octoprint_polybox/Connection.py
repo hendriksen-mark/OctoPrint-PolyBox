@@ -51,7 +51,15 @@ class Connection():
 						self._logger.info("Starting read thread on /dev/ttyUSB1...")
 						self.serialConn = serial.Serial('/dev/ttyUSB1', 115200, timeout=0.5)
 						self._logger.info("step 1...")
-						self.startReadThread(self)
+						if self.readThread is None:
+							self.logger.info("startReadThread")
+							self.readThreadStop = False
+							self.readThread = threading.Thread(
+								target=self.arduino_read_thread,
+								args=(self.serialConn,)
+							)
+							self.readThread.daemon = True
+							self.readThread.start()
 						self._logger.info("step 2...")
 						self._connected = True
 						self._logger.info("step 3...")
@@ -68,7 +76,15 @@ class Connection():
 						self._logger.info("Starting read thread on /dev/ttyUSB0...")
 						self.serialConn = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.5)
 						self._logger.info("step 1...")
-						self.startReadThread(self)
+						if self.readThread is None:
+							self.logger.info("startReadThread")
+							self.readThreadStop = False
+							self.readThread = threading.Thread(
+								target=self.arduino_read_thread,
+								args=(self.serialConn,)
+							)
+							self.readThread.daemon = True
+							self.readThread.start()
 						self._logger.info("step 2...")
 						self._connected = True
 						self._logger.info("step 3...")
@@ -226,18 +242,6 @@ class Connection():
 				return True
 			else:
 				return False
-
-	def startReadThread(self):
-		self._logger.info("step 4...")
-		if self.readThread is None:
-			self.logger.info("startReadThread")
-			self.readThreadStop = False
-			self.readThread = threading.Thread(
-				target=self.arduino_read_thread,
-				args=(self.serialConn,)
-			)
-			self.readThread.daemon = True
-			self.readThread.start()
 
 	def stopReadThread(self):
 		self.readThreadStop = True
