@@ -43,33 +43,36 @@ class Connection():
 		if len(self.ports) > 1:
 			printer_port = self._printer.get_current_connection()[1]
 			self._logger.info("Printer port: %s" % printer_port)
-			if printer_port == '/dev/ttyUSB0':
-				self._logger.info("len ports: %s" % len(self.ports))
-				self._logger.info("Skipping Printer Port: /dev/ttyUSB0")
-				try:
-					self._logger.info("Starting read thread on /dev/ttyUSB1...")
-					self.serialConn = serial.Serial('/dev/ttyUSB1', 115200, timeout=0.5)
-					self.startReadThread()
-					self._connected = True
-					self.update_ui_error("Connection succes on /dev/ttyUSB1!")
-				except:
-					self._logger.info("Couldn't connect on any port.")
-					self.update_ui_error("Couldn't connect on any port.")
+			if not self._connected:
+				if printer_port == '/dev/ttyUSB0':
+					self._logger.info("len ports: %s" % len(self.ports))
+					self._logger.info("Skipping Printer Port: /dev/ttyUSB0")
+					try:
+						self._logger.info("Starting read thread on /dev/ttyUSB1...")
+						self.serialConn = serial.Serial('/dev/ttyUSB1', 115200, timeout=0.5)
+						self.startReadThread()
+						self._connected = True
+						self.update_ui_error("Connection succes on /dev/ttyUSB1!")
+					except:
+						self._logger.info("Couldn't connect on any port.")
+						self.update_ui_error("Couldn't connect on any port.")
 
 
-			if printer_port == '/dev/ttyUSB1':
-				self._logger.info("len ports: %s" % len(self.ports))
-				self._logger.info("Skipping Printer Port: /dev/ttyUSB1")
-				try:
-					self._logger.info("Starting read thread on /dev/ttyUSB0...")
-					self.serialConn = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.5)
-					self.startReadThread()
-					self._connected = True
-					self.update_ui_error("Connection succes on /dev/ttyUSB0!")
-				except:
-					self._logger.info("Couldn't connect on any port.")
-					self.update_ui_error("Couldn't connect on any port.")
-
+				if printer_port == '/dev/ttyUSB1':
+					self._logger.info("len ports: %s" % len(self.ports))
+					self._logger.info("Skipping Printer Port: /dev/ttyUSB1")
+					try:
+						self._logger.info("Starting read thread on /dev/ttyUSB0...")
+						self.serialConn = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.5)
+						self.startReadThread()
+						self._connected = True
+						self.update_ui_error("Connection succes on /dev/ttyUSB0!")
+					except:
+						self._logger.info("Couldn't connect on any port.")
+						self.update_ui_error("Couldn't connect on any port.")
+			else:
+				self._logger.info("Already connected to" % self.serialConn.port)
+				self.update_ui_error("Already connected to scale")
 		else:
 			self._logger.info("NO SERIAL PORTS FOUND!")
 			self.update_ui_error("NO SERIAL PORTS FOUND!")
