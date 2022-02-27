@@ -36,12 +36,15 @@ class Connection():
 
 	def connect(self):
 		self._logger.info("Connecting...")
+		self.update_ui_error("Connecting...")
 
 		self.ports = self.getAllPorts()
 		self._logger.info("Potential ports: %s" % self.ports)
 		if len(self.ports) > 0:
 			self._logger.info("len ports: %s" % len(self.ports))
 			for port in self.ports:
+				self._logger.info("testing port: %s" % port)
+				self.update_ui_error(self._logger.info("testing port: %s" % port))
 				self._logger.info("is connected?: %s" % self._connected)
 				self._logger.info("same as printer port?: %s" % self.isPrinterPort(port))
 				if not self._connected:
@@ -53,6 +56,7 @@ class Connection():
 							self.serialConn = serial.Serial(port, 115200, timeout=0.5)
 							self.startReadThread()
 							self._connected = True
+							self.update_ui_error("Connection succes!" % port)
 						except serial.SerialException:
 							self.update_ui_error("Connection failed!")
 			if not self._connected:
