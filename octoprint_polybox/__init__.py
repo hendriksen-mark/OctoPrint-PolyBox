@@ -79,11 +79,11 @@ class PolyBoxPlugin(octoprint.plugin.StartupPlugin,
 				self.conn.tare(payload["id"])
 			elif command == "zero":
 				self.conn.zero(payload["id"])
-			response = "POST request (%s) successful" % command
+			response = "POST request (%s) successful".format(command)
 			return flask.jsonify(response=response, data=data, status=200), 200
 		except Exception as e:
 			error = str(e)
-			self._logger.info("Exception message: %s" % str(e))
+			self._logger.info("Exception message: %s".format(str(e)))
 			return flask.jsonify(error=error, status=500), 500
 
 	# ~~ Gcode Processor hook
