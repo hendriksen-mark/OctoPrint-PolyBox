@@ -252,3 +252,7 @@ class Connection():
 
 	def is_connected(self):
 		return self._connected
+
+	def read_arduino():
+		while(self._connected):
+			self.startReadThread()
