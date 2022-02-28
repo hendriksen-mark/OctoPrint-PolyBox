@@ -18,7 +18,7 @@ l2Pattern = re.compile(L2_EXPRESSION)
 
 class Connection():
 	def __init__(self, plugin):
-		self._logger = plugin._logger
+		self._logger = logging.getLogger(Connection)
 		self._printer = plugin._printer
 		self._printer_profile_manager = plugin._printer_profile_manager
 		self._plugin_manager = plugin._plugin_manager
