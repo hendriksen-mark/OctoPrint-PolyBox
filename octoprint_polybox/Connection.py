@@ -34,16 +34,6 @@ class Connection():
 		self.boxExtrusionOffset = 0
 		self.connect()
 
-	if self._connected:
-		try:
-			self._logger.info("startReadThread1")
-			self.startReadThread()
-		except Exception as e:
-			error = str(e)
-			self._logger.info("No startReadThread1 error: {}".format(str(e)))
-			self._logger.info("startReadThread error")
-			self.update_ui_error("No startReadThread1")
-
 	def connect(self):
 		self._logger.info("Connecting...")
 		self.update_ui_error("Connecting...")
