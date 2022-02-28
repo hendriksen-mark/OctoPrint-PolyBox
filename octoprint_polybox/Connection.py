@@ -5,8 +5,6 @@ import glob
 import threading
 import serial
 import serial.tools.list_ports
-import logging
-import logging.handlers
 
 HUMIDITY_EXPRESSION = "^H:+([\\-0-9]+[.]*[0-9]*)%.*"
 L1_EXPRESSION = ".*L1:+([\\-0-9]+[.]*[0-9]*)mm.*"
@@ -18,8 +16,10 @@ l2Pattern = re.compile(L2_EXPRESSION)
 
 class Connection():
 	def __init__(self, plugin):
-		self._logger = plugin._logger
-		logger = logging.getLogger('Connection')
+		import logging
+
+		self._logger = logging.getLogger("octoprint.plugins.polybox")
+		self._logger.debug("__init__")
 		self._printer = plugin._printer
 		self._printer_profile_manager = plugin._printer_profile_manager
 		self._plugin_manager = plugin._plugin_manager
