@@ -166,6 +166,7 @@ class Connection():
 		while self.readThreadStop is False:
 			try:
 				line = serialConnection.readline()
+				self._logger.info("serial msg{}".format(line))
 				if line:
 					line = line.strip()
 					if line[:5] == "ERROR":
