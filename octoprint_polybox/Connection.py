@@ -5,6 +5,8 @@ import glob
 import threading
 import serial
 import serial.tools.list_ports
+import logging
+import logging.handlers
 
 HUMIDITY_EXPRESSION = "^H:+([\\-0-9]+[.]*[0-9]*)%.*"
 L1_EXPRESSION = ".*L1:+([\\-0-9]+[.]*[0-9]*)mm.*"
