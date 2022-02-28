@@ -47,53 +47,27 @@ class Connection():
 				if printer_port == '/dev/ttyUSB0':
 					self._logger.info("len ports: %s" % len(self.ports))
 					self._logger.info("Skipping Printer Port: /dev/ttyUSB0")
-					try:
-						self._logger.info("Starting read thread on /dev/ttyUSB1...")
-						self.serialConn = serial.Serial('/dev/ttyUSB1', 115200, timeout=0.5)
-						self._logger.info("step 1...")
-						self._logger.info("step 5...")
-						if self.readThread is None:
-							self.logger.info("startReadThread")
-							self.readThreadStop = False
-							self.readThread = threading.Thread(
-								target=self.arduino_read_thread,
-								args=(self.serialConn,)
-							)
-							self.readThread.daemon = True
-							self.readThread.start()
-						self._logger.info("step 2...")
-						self._connected = True
-						self._logger.info("step 3...")
-						self.update_ui_error("Connection succes on /dev/ttyUSB1!")
-					except:
-						self._logger.info("Couldn't connect on any port.")
-						self.update_ui_error("Couldn't connect on any port.")
+					self._logger.info("Starting read thread on /dev/ttyUSB1...")
+					self.serialConn = serial.Serial('/dev/ttyUSB1', 115200, timeout=0.5)
+					self._logger.info("step 1...")
+					self.startReadThread()
+					self._logger.info("step 2...")
+					self._connected = True
+					self._logger.info("step 3...")
+					self.update_ui_error("Connection succes on /dev/ttyUSB1!")
 
 
 				if printer_port == '/dev/ttyUSB1':
 					self._logger.info("len ports: %s" % len(self.ports))
 					self._logger.info("Skipping Printer Port: /dev/ttyUSB1")
-					try:
-						self._logger.info("Starting read thread on /dev/ttyUSB0...")
-						self.serialConn = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.5)
-						self._logger.info("step 1...")
-						self._logger.info("step 5...")
-						if self.readThread is None:
-							self.logger.info("startReadThread")
-							self.readThreadStop = False
-							self.readThread = threading.Thread(
-								target=self.arduino_read_thread,
-								args=(self.serialConn,)
-							)
-							self.readThread.daemon = True
-							self.readThread.start()
-						self._logger.info("step 2...")
-						self._connected = True
-						self._logger.info("step 3...")
-						self.update_ui_error("Connection succes on /dev/ttyUSB0!")
-					except:
-						self._logger.info("Couldn't connect on any port.")
-						self.update_ui_error("Couldn't connect on any port.")
+					self._logger.info("Starting read thread on /dev/ttyUSB0...")
+					self.serialConn = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.5)
+					self._logger.info("step 1...")
+					self.startReadThread()
+					self._logger.info("step 2...")
+					self._connected = True
+					self._logger.info("step 3...")
+					self.update_ui_error("Connection succes on /dev/ttyUSB0!")
 			else:
 				self._logger.info("Already connected to" % self.serialConn.port)
 				self.update_ui_error("Already connected to scale")
@@ -244,6 +218,18 @@ class Connection():
 				return True
 			else:
 				return False
+
+	def startReadThread(self):
+		self._logger.info("step 4...")
+		if self.readThread is None:
+			self.logger.info("startReadThread")
+			self.readThreadStop = False
+			self.readThread = threading.Thread(
+				target=self.arduino_read_thread,
+				args=(self.serialConn,)
+			)
+			self.readThread.daemon = True
+			self.readThread.start()
 
 	def stopReadThread(self):
 		self.readThreadStop = True
