@@ -40,52 +40,32 @@ class Connection():
 
 		self.ports = self.getAllPorts()
 		self._logger.info("Potential ports: {}".format(self.ports))
-		if len(self.ports) > 1:
-			printer_port = self._printer.get_current_connection()[1]
-			self._logger.info("Printer port: {}".format(printer_port))
+		if len(self.ports) > 0:
+			self._logger.info("len ports: {}".format(len(self.ports)))
+			for port in self.ports:
+				self._logger.info("testing port: {}".format(port))
+				self.update_ui_error(self._logger.info("testing port: {}".format(port)))
+				self._logger.info("is connected?: {}".format(self._connected))
+				self._logger.info("same as printer port?: {}".format(self.isPrinterPort(port)))
+				if not self._connected:
+					if self.isPrinterPort(port):
+						self._logger.info("Skipping Printer Port:{}".format(port))
+					else:
+						try:
+							self._logger.info("Starting read thread...")
+							self.serialConn = serial.Serial(port, 115200, timeout=0.5)
+							self.startReadThread()
+							self._connected = True
+							self.update_ui_error("Connection succes!")
+						except serial.SerialException:
+							self.update_ui_error("Connection failed!")
 			if not self._connected:
-				if printer_port == '/dev/ttyUSB0':
-					self._logger.info("len ports: {}".format(len(self.ports)))
-					self._logger.info("Skipping Printer Port: /dev/ttyUSB0")
-					try:
-						self._logger.info("Starting read thread on /dev/ttyUSB1...")
-						self.serialConn = serial.Serial('/dev/ttyUSB1', 115200, timeout=0.5)
-						self._logger.info("step 1...")
-						self.startReadThread()
-						self._logger.info("step 2...")
-						self._connected = True
-						self._logger.info("step 3...")
-						self.update_ui_error("Connection succes on /dev/ttyUSB1!")
-					except Exception as e:
-						error = str(e)
-						self._logger.info("Connection error: {}".format(str(e)))
-						self._logger.info("Couldn't connect on any port.")
-						self.update_ui_error("Couldn't connect on any port.")
-
-
-				if printer_port == '/dev/ttyUSB1':
-					self._logger.info("len ports: {}".format(len(self.ports)))
-					self._logger.info("Skipping Printer Port: /dev/ttyUSB1")
-					try:
-						self._logger.info("Starting read thread on /dev/ttyUSB0...")
-						self.serialConn = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.5)
-						self._logger.info("step 1...")
-						self.startReadThread()
-						self._logger.info("step 2...")
-						self._connected = True
-						self._logger.info("step 3...")
-						self.update_ui_error("Connection succes on /dev/ttyUSB0!")
-					except Exception as e:
-						error = str(e)
-						self._logger.info("Connection error: {}".format(str(e)))
-						self._logger.info("Couldn't connect on any port.")
-						self.update_ui_error("Couldn't connect on any port.")
-			else:
-				self._logger.info("Already connected to {}".format(self.serialConn.port))
-				self.update_ui_error("Already connected to scale")
+				self._logger.info("Couldn't connect on any port.")
+				self.update_ui_error("Couldn't connect on any port.")
 		else:
 			self._logger.info("NO SERIAL PORTS FOUND!")
-			self.update_ui_error("NO SERIAL PORTS FOUND!")
+			msg = "NO SERIAL PORTS FOUND!"
+			self.update_ui_error(msg)
 
 	def update_ui_control(self, data):
 		self._plugin_manager.send_plugin_message(self._identifier, {"type": "control", "data": data})
