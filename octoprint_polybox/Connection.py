@@ -34,7 +34,7 @@ class Connection():
 		self.boxExtrusionOffset = 0
 		self.connect()
 
-	if self.is_connected():
+	if self._connected:
 		try:
 			self._logger.info("startReadThread1")
 			self.startReadThread()
