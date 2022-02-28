@@ -1,5 +1,5 @@
 # coding=utf-8
-from __future__ import absolute_import
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import octoprint.plugin
 import re
@@ -11,10 +11,10 @@ extrusionPattern = re.compile(EXTRUSION_EXPRESSION)
 
 
 class PolyBoxPlugin(octoprint.plugin.StartupPlugin,
-							octoprint.plugin.SettingsPlugin,
-							octoprint.plugin.AssetPlugin,
-							octoprint.plugin.SimpleApiPlugin,
-							octoprint.plugin.TemplatePlugin):
+				octoprint.plugin.SettingsPlugin,
+				octoprint.plugin.AssetPlugin,
+				octoprint.plugin.SimpleApiPlugin,
+				octoprint.plugin.TemplatePlugin):
 
 	# ~~ StartupPlugin mixin
 

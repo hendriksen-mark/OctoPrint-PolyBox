@@ -56,9 +56,15 @@ class Connection():
 							self.serialConn = serial.Serial(port, 115200, timeout=0.5)
 							self.startReadThread()
 							self._connected = True
-							self.update_ui_error("Connection succes!")
+							msg = "Connection succes on {}".format(self.serialConn.port)
+							self.update_ui_error(msg)
+							self._logger.info("Connection succes on {}".format(self.serialConn.port))
 						except serial.SerialException:
 							self.update_ui_error("Connection failed!")
+				else:# DEBUG
+					self._logger.info("Already connected to {}".format(self.serialConn.port))
+					msg = "Already connected to {}".format(self.serialConn.port)
+					self.update_ui_error(msg)
 			if not self._connected:
 				self._logger.info("Couldn't connect on any port.")
 				self.update_ui_error("Couldn't connect on any port.")
@@ -126,8 +132,7 @@ class Connection():
 			amount += float(match.group(1))
 
 		self.boxExtrusion = (amount - self.boxExtrusionOffset)
-		self._plugin_manager.send_plugin_message(self._identifier,
-												 dict(type="extrusion", data="box={}".format(self.boxExtrusion)))
+		self._plugin_manager.send_plugin_message(self._identifier, dict(type="extrusion", data="box={}".format(self.boxExtrusion)))
 
 	def monitor_gcode_extrusion(self, amount):
 		self.gCodeExtrusion += float(amount)
@@ -145,15 +150,21 @@ class Connection():
 		self._logger.info("Read Thread: Starting thread")
 		while self.readThreadStop is False:
 			try:
-				line = serialConnection.readline()
+				line = serialConnection.readline().decode('utf-8').rstrip()
 				self._logger.info("serial msg{}".format(line))
 				if line:
-					line = line.strip()
+					#line = line.strip()
+					self.update_ui_error("Serial msg{}".format(line))#DEBUG
+					self._logger.info("Serial msg{}".format(line))#DEBUG
 					if line[:5] == "ERROR":
+						self._logger.info("Read Thread: ERROR")# DEBUG
 						self.update_ui_error(line)
 					elif line[:6] == "PROMPT":
+						self._logger.info("Read Thread: PROMPT")# DEBUG
 						self.update_ui_prompt(line)
 					elif line[:11] == "CALIBRATION":
+						self._logger.info("Read Thread: CALIBRATION")# DEBUG
+						self.update_ui_error("Read Thread: CALIBRATION")# DEBUG
 						self.update_ui_control(line)
 					else:
 						self.monitor_humidity(line)
@@ -178,7 +189,10 @@ class Connection():
 				baselist.append(port.device)
 
 		baselist = baselist \
-			+ glob.glob('/dev/*ttyUSB*')
+            	+ glob.glob('/dev/serial/by-id/*FTDI*') \
+            	+ glob.glob('/dev/*usbserial*') \
+				+ glob.glob('/dev/*usbmodem*') \
+				+ glob.glob('/dev/*tty*')
 
 		baselist = self.getRealPaths(baselist)
 		# get unique values only
@@ -223,6 +237,8 @@ class Connection():
 			)
 			self.readThread.daemon = True
 			self.readThread.start()
+		else:
+			self._logger.info("readTread: {}".format(readThread))
 
 	def stopReadThread(self):
 		self.readThreadStop = True
