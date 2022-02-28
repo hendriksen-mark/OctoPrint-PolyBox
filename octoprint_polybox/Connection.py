@@ -253,7 +253,7 @@ class Connection():
 	def is_connected(self):
 		return self._connected
 
-	if self._connected:
+	if self.conn.is_connected():
 		try:
 			self._logger.info("startReadThread1")
 			self.startReadThread()
