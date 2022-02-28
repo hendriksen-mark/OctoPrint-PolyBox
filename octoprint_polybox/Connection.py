@@ -192,7 +192,8 @@ class Connection():
             	+ glob.glob('/dev/serial/by-id/*FTDI*') \
             	+ glob.glob('/dev/*usbserial*') \
 				+ glob.glob('/dev/*usbmodem*') \
-				+ glob.glob('/dev/*ttyUSB*')
+				+ glob.glob('/dev/*ttyUSB*') \
+				+ glob.glob('/dev/*ttyACM*')
 
 		baselist = self.getRealPaths(baselist)
 		# get unique values only
