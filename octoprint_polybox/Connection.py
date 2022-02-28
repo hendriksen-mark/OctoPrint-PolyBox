@@ -81,7 +81,7 @@ class Connection():
 						self._logger.info("Couldn't connect on any port.")
 						self.update_ui_error("Couldn't connect on any port.")
 			else:
-				self._logger.info("Already connected to".format(self.serialConn.port))
+				self._logger.info("Already connected to {}".format(self.serialConn.port))
 				self.update_ui_error("Already connected to scale")
 		else:
 			self._logger.info("NO SERIAL PORTS FOUND!")
