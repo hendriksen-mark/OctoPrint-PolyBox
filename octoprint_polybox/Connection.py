@@ -151,11 +151,11 @@ class Connection():
 		while self.readThreadStop is False:
 			try:
 				line = serialConnection.readline().decode('utf-8').rstrip()
-				self._logger.info("serial msg{}".format(line))
+				#self._logger.info("serial msg{}".format(line))
 				if line:
 					#line = line.strip()
-					self.update_ui_error("Serial msg{}".format(line))#DEBUG
-					self._logger.info("Serial msg{}".format(line))#DEBUG
+					#self.update_ui_error("Serial msg{}".format(line))#DEBUG
+					#self._logger.info("Serial msg{}".format(line))#DEBUG
 					if line[:5] == "ERROR":
 						self._logger.info("Read Thread: ERROR")# DEBUG
 						self.update_ui_error(line)
@@ -192,7 +192,7 @@ class Connection():
             	+ glob.glob('/dev/serial/by-id/*FTDI*') \
             	+ glob.glob('/dev/*usbserial*') \
 				+ glob.glob('/dev/*usbmodem*') \
-				+ glob.glob('/dev/*tty*')
+				+ glob.glob('/dev/*ttyUSB*')
 
 		baselist = self.getRealPaths(baselist)
 		# get unique values only
