@@ -147,7 +147,7 @@ class Connection():
 
 		self.boxExtrusion = (amount - self.boxExtrusionOffset)
 		self._plugin_manager.send_plugin_message(self._identifier,
-												 dict(type="extrusion", data="box=%d".format(self.boxExtrusion)))
+												 dict(type="extrusion", data="box={}".format(self.boxExtrusion)))
 
 	def monitor_gcode_extrusion(self, amount):
 		self.gCodeExtrusion += float(amount)
@@ -155,7 +155,7 @@ class Connection():
 			self._printer.pause_print()
 			self.update_ui_error("Extrusion Mismatch detected, pausing print!")
 		self._plugin_manager.send_plugin_message(
-			self._identifier, dict(type="extrusion", data="gcode=%d".format(self.gCodeExtrusion)))
+			self._identifier, dict(type="extrusion", data="gcode={}".format(self.gCodeExtrusion)))
 
 	def is_extrusion_mismatch_triggered(self):
 		return self._settings.get(["extrusionMismatchPause"]) & float(self.gCodeExtrusion) - float(
