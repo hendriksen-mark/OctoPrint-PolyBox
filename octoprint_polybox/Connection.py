@@ -253,12 +253,12 @@ class Connection():
 	def is_connected(self):
 		return self._connected
 
-	if self.conn.is_connected():
-		try:
-			self._logger.info("startReadThread1")
-			self.startReadThread()
-		except Exception as e:
-			error = str(e)
-			self._logger.info("No startReadThread1 error: {}".format(str(e)))
-			self._logger.info("startReadThread error")
-			self.update_ui_error("No startReadThread1")
+if Connection.is_connected():
+	try:
+		self._logger.info("startReadThread1")
+		self.startReadThread()
+	except Exception as e:
+		error = str(e)
+		self._logger.info("No startReadThread1 error: {}".format(str(e)))
+		self._logger.info("startReadThread error")
+		self.update_ui_error("No startReadThread1")
