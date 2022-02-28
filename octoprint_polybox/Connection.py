@@ -16,10 +16,7 @@ l2Pattern = re.compile(L2_EXPRESSION)
 
 class Connection():
 	def __init__(self, plugin):
-		import logging
-
-		self._logger = logging.getLogger("octoprint.plugins.polybox")
-		self._logger.debug("__init__")
+		self._logger = plugin._logger
 		self._printer = plugin._printer
 		self._printer_profile_manager = plugin._printer_profile_manager
 		self._plugin_manager = plugin._plugin_manager
@@ -237,7 +234,7 @@ class Connection():
 	def startReadThread(self):
 		self._logger.info("step 4...")
 		if self.readThread is None:
-			self.logger.info("startReadThread")
+			self._logger.info("startReadThread")
 			self.readThreadStop = False
 			self.readThread = threading.Thread(
 				target=self.arduino_read_thread,
