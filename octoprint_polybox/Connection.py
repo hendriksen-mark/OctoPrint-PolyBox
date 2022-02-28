@@ -39,13 +39,13 @@ class Connection():
 		self.update_ui_error("Connecting...")
 
 		self.ports = self.getAllPorts()
-		self._logger.info("Potential ports: %s" % self.ports)
+		self._logger.info("Potential ports: %s".format(self.ports))
 		if len(self.ports) > 1:
 			printer_port = self._printer.get_current_connection()[1]
-			self._logger.info("Printer port: %s" % printer_port)
+			self._logger.info("Printer port: %s".format(printer_port))
 			if not self._connected:
 				if printer_port == '/dev/ttyUSB0':
-					self._logger.info("len ports: %s" % len(self.ports))
+					self._logger.info("len ports: %s".format(len(self.ports)))
 					self._logger.info("Skipping Printer Port: /dev/ttyUSB0")
 					try:
 						self._logger.info("Starting read thread on /dev/ttyUSB1...")
@@ -58,13 +58,13 @@ class Connection():
 						self.update_ui_error("Connection succes on /dev/ttyUSB1!")
 					except Exception as e:
 						error = str(e)
-						self._logger.info("Connection error: %s" % str(e))
+						self._logger.info("Connection error: %s".format(str(e)))
 						self._logger.info("Couldn't connect on any port.")
 						self.update_ui_error("Couldn't connect on any port.")
 
 
 				if printer_port == '/dev/ttyUSB1':
-					self._logger.info("len ports: %s" % len(self.ports))
+					self._logger.info("len ports: %s".format(len(self.ports)))
 					self._logger.info("Skipping Printer Port: /dev/ttyUSB1")
 					try:
 						self._logger.info("Starting read thread on /dev/ttyUSB0...")
@@ -77,11 +77,11 @@ class Connection():
 						self.update_ui_error("Connection succes on /dev/ttyUSB0!")
 					except Exception as e:
 						error = str(e)
-						self._logger.info("Connection error: %s" % str(e))
+						self._logger.info("Connection error: %s".format(str(e)))
 						self._logger.info("Couldn't connect on any port.")
 						self.update_ui_error("Couldn't connect on any port.")
 			else:
-				self._logger.info("Already connected to" % self.serialConn.port)
+				self._logger.info("Already connected to".format(self.serialConn.port))
 				self.update_ui_error("Already connected to scale")
 		else:
 			self._logger.info("NO SERIAL PORTS FOUND!")
@@ -100,25 +100,25 @@ class Connection():
 		self._plugin_manager.send_plugin_message(self._identifier, {"type": "error", "data": error})
 
 	def set(self, name, value):
-		value_str = "SET " + name + "=%s" % value
+		value_str = "SET " + name + "=%s".format(value)
 		self._logger.info(value_str)
 		self.serialConn.write(value_str.encode())
 
 	def send(self, data):
-		self._logger.info("Sending: %s" % data)
+		self._logger.info("Sending: %s".format(data))
 		self.serialConn.write(data.encode())
 
 	def calibrate(self, spoolNum):
-		self._logger.info("Calibrating spool: %s" % spoolNum)
-		self.serialConn.write(("CALI %s" % spoolNum).encode())
+		self._logger.info("Calibrating spool: %s".format(spoolNum))
+		self.serialConn.write(("CALI %s".format(spoolNum)).encode())
 
 	def tare(self, spoolNum):
-		self._logger.info("Taring spool: %s" % spoolNum)
-		self.serialConn.write(("TARE %s" % spoolNum).encode())
+		self._logger.info("Taring spool: %s".format(spoolNum))
+		self.serialConn.write(("TARE %s".format(spoolNum)).encode())
 
 	def zero(self, spoolNum):
-		self._logger.info("Zeroing spool: %s" % spoolNum)
-		self.serialConn.write(("ZERO %s" % spoolNum).encode())
+		self._logger.info("Zeroing spool: %s".format(spoolNum))
+		self.serialConn.write(("ZERO %s".format(spoolNum)).encode())
 
 	def reset_extrusion(self):
 		self.gCodeExtrusion = 0
@@ -147,7 +147,7 @@ class Connection():
 
 		self.boxExtrusion = (amount - self.boxExtrusionOffset)
 		self._plugin_manager.send_plugin_message(self._identifier,
-												 dict(type="extrusion", data="box=%d" % self.boxExtrusion))
+												 dict(type="extrusion", data="box=%d".format(self.boxExtrusion)))
 
 	def monitor_gcode_extrusion(self, amount):
 		self.gCodeExtrusion += float(amount)
@@ -155,7 +155,7 @@ class Connection():
 			self._printer.pause_print()
 			self.update_ui_error("Extrusion Mismatch detected, pausing print!")
 		self._plugin_manager.send_plugin_message(
-			self._identifier, dict(type="extrusion", data="gcode=%d" % self.gCodeExtrusion))
+			self._identifier, dict(type="extrusion", data="gcode=%d".format(self.gCodeExtrusion)))
 
 	def is_extrusion_mismatch_triggered(self):
 		return self._settings.get(["extrusionMismatchPause"]) & float(self.gCodeExtrusion) - float(
@@ -193,7 +193,7 @@ class Connection():
 			# use windows com stuff
 			self._logger.info("Using a windows machine")
 			for port in serial.tools.list_ports.grep('.*0403:6015.*'):
-				self._logger.info("got port %s" % port.device)
+				self._logger.info("got port %s".format(port.device))
 				baselist.append(port.device)
 
 		baselist = baselist \
@@ -205,7 +205,7 @@ class Connection():
 		return baselist
 
 	def getRealPaths(self, ports):
-		self._logger.info("Paths: %s" % ports)
+		self._logger.info("Paths: %s".format(ports))
 		for index, port in enumerate(ports):
 			port = os.path.realpath(port)
 			ports[index] = port
@@ -214,8 +214,8 @@ class Connection():
 	def isPrinterPort(self, selected_port):
 		selected_port = os.path.realpath(selected_port)
 		printer_port = self._printer.get_current_connection()[1]
-		self._logger.info("Trying port: %s" % selected_port)
-		self._logger.info("Printer port: %s" % printer_port)
+		self._logger.info("Trying port: %s".format(selected_port))
+		self._logger.info("Printer port: %s".format(printer_port))
 		# because ports usually have a second available one (.tty or .cu)
 		printer_port_alt = ""
 		if printer_port is None:
@@ -225,7 +225,7 @@ class Connection():
 				printer_port_alt = printer_port.replace("tty.", "cu.", 1)
 			elif "cu." in printer_port:
 				printer_port_alt = printer_port.replace("cu.", "tty.", 1)
-			self._logger.info("Printer port alt: %s" % printer_port_alt)
+			self._logger.info("Printer port alt: %s".format(printer_port_alt))
 			if selected_port == printer_port or selected_port == printer_port_alt:
 				return True
 			else:
