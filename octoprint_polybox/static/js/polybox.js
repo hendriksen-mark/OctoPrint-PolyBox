@@ -154,14 +154,6 @@ $(function() {
             }
         };
 
-        self.onStartup = function() {
-            var element = $("#state").find(".accordion-inner [data-bind='text: stateString']");
-            if (element.length) {
-                var text = gettext("Spool 1 Remaining");
-                element.after("<br>" + text + ": <strong data-bind='text: w1'></strong>");
-            }
-        };
-
         self.ajaxRequest = payload => {
             return $.ajax({
                 url: API_BASEURL + "plugin/polybox",
